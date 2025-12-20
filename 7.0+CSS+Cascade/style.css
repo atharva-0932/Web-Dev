@@ -14,7 +14,7 @@ p {
   border: 10px solid maroon;
 }
 
-#inner-box{
+.inner-box{
   background-color: red;
 }
 .white-text {

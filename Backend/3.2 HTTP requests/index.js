@@ -1,15 +1,15 @@
-import express from "express";
+import express from 'express';
 const app=express();
-const port=3000
-app.get("/",(req,res)=>{
-    res.send("Hello world");
+const port=3000;
+app.get('/', (req,res) =>{
+    res.send('Hello');
 })
-app.get("/about",(req,res)=>{
-    res.send("I am Atharva");
+app.get('/about/', (req,res) =>{
+    res.send("About us");
 })
-app.get("/contact",(req,res)=>{
-    res.send("8879184384");
+app.get('/contact',(req,res)=>{
+    res.send("Contact us");
 })
 app.listen(port,()=>{
-    console.log(`Server running on ${port}`);
+    console.log(`Server is running on http://localhost:${port}`);   
 })

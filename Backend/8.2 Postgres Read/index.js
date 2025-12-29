@@ -8,8 +8,13 @@ const db = new pg.Client({
   database: "world",
   password: "Tc0932@1234",
   port: 5432,
-}); 
+});
+
+const app = express();
+const port = 3000;
+
 db.connect();
+
 let quiz = [];
 db.query("SELECT * FROM flags", (err, res) => {
   if (err) {
@@ -20,10 +25,6 @@ db.query("SELECT * FROM flags", (err, res) => {
   db.end();
 });
 
-
-const app = express();
-const port = 3000;
-
 let totalCorrect = 0;
 
 // Middleware
@@ -33,9 +34,9 @@ app.use(express.static("public"));
 let currentQuestion = {};
 
 // GET home page
-app.get("/", (req, res) => {
-
-  nextQuestion();
+app.get("/", async (req, res) => {
+  totalCorrect = 0;
+  await nextQuestion();
   console.log(currentQuestion);
   res.render("index.ejs", { question: currentQuestion });
 });
@@ -56,6 +57,16 @@ app.post("/submit", (req, res) => {
     wasCorrect: isCorrect,
     totalScore: totalCorrect,
   });
+});
+
+async function nextQuestion() {
+  const randomCountry = quiz[Math.floor(Math.random() * quiz.length)];
+
+  currentQuestion = randomCountry;
+}
+
+app.listen(port, () => {
+  console.log(`Server is running at http://localhost:${port}`);
 });
 
 function nextQuestion() {
